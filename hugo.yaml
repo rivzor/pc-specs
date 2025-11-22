@@ -22,7 +22,7 @@ menu:
 
     - identifier: docs
       name: Мои гайды
-      pageRef: /docs/
+      pageRef: /docs
       weight: 2
       params:
         type: link

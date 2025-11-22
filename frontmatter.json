@@ -7,43 +7,62 @@
       "previewPath": null,
       "fields": [
         {
-          "title": "Title",
-          "name": "title",
-          "type": "string"
-        },
-        {
-          "title": "Description",
+          "title": "description",
           "name": "description",
           "type": "string"
         },
         {
-          "title": "Publishing date",
-          "name": "date",
-          "type": "datetime",
-          "default": "{{now}}",
-          "isPublishDate": true
+          "title": "weight",
+          "name": "weight",
+          "type": "number"
         },
         {
-          "title": "Content preview",
-          "name": "preview",
-          "type": "image"
+          "title": "comments",
+          "name": "comments",
+          "type": "boolean"
         },
         {
-          "title": "Is in draft",
-          "name": "draft",
-          "type": "draft"
+          "title": "toc",
+          "name": "toc",
+          "type": "boolean"
         },
         {
-          "title": "Tags",
+          "title": "cascade",
+          "name": "cascade",
+          "type": "fields",
+          "fields": [
+            {
+              "title": "type",
+              "name": "type",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "title": "breadcrumbs",
+          "name": "breadcrumbs",
+          "type": "boolean"
+        },
+        {
+          "title": "tags",
           "name": "tags",
           "type": "tags"
-        },
-        {
-          "title": "Categories",
-          "name": "categories",
-          "type": "categories"
         }
       ]
+    }
+  ],
+  "frontMatter.content.pageFolders": [
+    {
+      "title": "docs",
+      "path": "[[workspace]]/content/docs"
+    },
+    {
+      "title": "content",
+      "path": "[[workspace]]/content"
+    },
+    {
+      "title": "pc-specs",
+      "path": "[[workspace]]"
     }
   ]
 }
