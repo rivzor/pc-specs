@@ -1,0 +1,32 @@
+:root {
+  /* Page width - also configurable via hugo.yaml params.page.width */
+  --hextra-max-page-width: 100%; /* default: 80rem (normal), 90rem (wide), 100% (full) */
+
+  /* Navbar width - also configurable via hugo.yaml params.navbar.width */
+  --hextra-max-navbar-width: 90rem; /* independent navbar width */
+
+  /* Footer width - also configurable via hugo.yaml params.footer.width */
+  --hextra-max-footer-width: 80rem; /* independent footer width */
+
+  --js: hsl(0, 47.5%, 53.7%);
+  /* Badge colors mapped to languages used on the homepage */
+  --badge-python: #0ea5e9; /* sky-500 */
+  --badge-cpp: #1e40af;    /* blue-600 */
+  --badge-csharp: #7c3aed; /* purple-600 */
+  --badge-js: #f59e0b;     /* yellow-400 */
+}
+
+/* Hextra/Tailwind-style classes include colons; escape them for CSS selectors
+   and map to our CSS variables so colors render even if Tailwind utilities
+   aren't generated. The !important ensures these overrides take effect. */
+.hx\:bg-sky-500 { background-color: var(--badge-python) !important; }
+.hx\:bg-blue-600 { background-color: var(--badge-cpp) !important; }
+.hx\:bg-purple-600 { background-color: var(--badge-csharp) !important; }
+.hx\:bg-yellow-400 { background-color: var(--badge-js) !important; }
+
+/* Provide fallback plain-class versions (without hx: prefix) in case
+   some content uses non-namespace classes. */
+.bg-sky-500 { background-color: var(--badge-python) !important; }
+.bg-blue-600 { background-color: var(--badge-cpp) !important; }
+.bg-purple-600 { background-color: var(--badge-csharp) !important; }
+.bg-yellow-400 { background-color: var(--badge-js) !important; }
