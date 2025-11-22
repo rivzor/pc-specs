@@ -13,13 +13,25 @@ module:
 
 menu:
   main:
+    - identifier: home
+      name: Главная
+      pageRef: /
+      weight: 1
+      params:
+        type: link
+
+    - identifier: docs
+      name: Мои гайды
+      pageRef: /docs/
+      weight: 2
+      params:
+        type: link
     - identifier: contacts
       name: Контакты
       pageRef: /#contacts
       weight: 4
       params:
         type: link
-        icon: share
 
     - name: Telegram ↗
       url: https://t.me/rivzor
@@ -89,7 +101,7 @@ params:
   banner:
     key: 'announcement-v.0.1'
     message: |
-      🎉 Добро пожаловать на мой сайт
+      🎉 Добро пожаловать на мой сайт!
 
   displayUpdatedDate: true
   dateFormat: "15 Oct 2023"
@@ -104,7 +116,7 @@ params:
     logo:
       path: logo.svg
       dark: logo-dark.svg
-      link: /
+      link: /pc-specs/
       width: 26
       height: 26
 
@@ -140,7 +152,7 @@ params:
       display: hover
 
   page:
-    width: normal
+    width: full
     tabs:
       sync: true
 

@@ -1,6 +1,6 @@
 :root {
   /* Page width - also configurable via hugo.yaml params.page.width */
-  --hextra-max-page-width: 100%; /* default: 80rem (normal), 90rem (wide), 100% (full) */
+  /*--hextra-max-page-width: 100%; /* default: 80rem (normal), 90rem (wide), 100% (full) */
 
   /* Navbar width - also configurable via hugo.yaml params.navbar.width */
   --hextra-max-navbar-width: 90rem; /* independent navbar width */

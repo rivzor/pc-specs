@@ -3,6 +3,7 @@ description: "Персональный сайт: контактная инфор
 weight: 1
 toc: false
 comments: true
+date: 2025-11-22T20:24:29.106Z
 ---
 
 {{< hextra/hero-headline >}}
@@ -52,13 +53,13 @@ comments: true
     {{< 
     hextra/feature-card 
     title="Основные компоненты" 
-    subtitle="**ОС:** Windows 11 Pro<br>**Материнская плата:** MSI A520M-A Pro<br>**Процессор:** AMD Ryzen 5 5600 (6 ядер, 12 потоков, 3.5–4.4 ГГц)<br>**ОП-память:** 32 ГБ DDR4 3600 МГц<br>**Видеокарта:** NVIDIA RTX 3060 Ti (8 ГБ)" 
+    subtitle="**ОС:** Windows 11 Pro<br>**Материнская плата:** MSI A520M-A Pro<br>**Процессор:** AMD Ryzen 5 5600 (6 ядер, 12 потоков, 3.5–4.4 ГГц)<br>**ОЗУ:** 32 ГБ DDR4 3600 МГц<br>**Видеокарта:** NVIDIA RTX 3060 Ti (8 ГБ)" 
     >}}
     
     {{< 
     hextra/feature-card 
     title="Хранилище" 
-    subtitle="SSD 240 ГБ — SATA<br>HDD 1 ТБ — Seagate<br>HDD 1 ТБ — WD<br>SSD NVMe 1 ТБ — DEXP" 
+    subtitle="SSD NVMe 1 ТБ — DEXP<br>SSD 240 ГБ — SATA<br>HDD 1 ТБ — Seagate<br>HDD 1 ТБ — WD" 
     >}}
 
 
