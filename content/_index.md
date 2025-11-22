@@ -21,21 +21,15 @@ comments: true
 {{< hextra/hero-badge >}}
   <div class="hx:w-2 hx:h-2 hx:rounded-full hx:bg-sky-500"></div>
   <span>Python</span>
-{{< /hextra/hero-badge >}}
-
-
+{{< /hextra/hero-badge >}}<a style="margin-right: 0.4rem;"></a>
 {{< hextra/hero-badge >}}
   <div class="hx:w-2 hx:h-2 hx:rounded-full hx:bg-blue-600"></div>
   <span>C++</span>
-{{< /hextra/hero-badge >}}
-
-
+{{< /hextra/hero-badge >}}<a style="margin-right: 0.4rem;"></a>
 {{< hextra/hero-badge >}}
   <div class="hx:w-2 hx:h-2 hx:rounded-full hx:bg-purple-600"></div>
   <span>C#</span>
-{{< /hextra/hero-badge >}}
-
-
+{{< /hextra/hero-badge >}}<a style="margin-right: 0.4rem;"></a>
 {{< hextra/hero-badge >}}
   <div class="hx:w-2 hx:h-2 hx:rounded-full hx:bg-yellow-400"></div>
   <span>JS</span>
