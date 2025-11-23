@@ -1,0 +1,21 @@
+{{ $status := .Get "status" | default "planned" }} <!-- active, done, planned -->
+<div class="roadmap-item" data-status="{{ $status }}">
+  
+  <!-- Точка на линии -->
+  <div class="roadmap-marker">
+    <div class="roadmap-dot"></div>
+    {{ if eq $status "active" }}<div class="roadmap-pulse"></div>{{ end }}
+  </div>
+
+  <!-- Карточка контента -->
+  <div class="roadmap-content glass-card">
+    <div class="roadmap-header">
+      <span class="roadmap-date">{{ .Get "date" }}</span>
+      <span class="roadmap-tag">{{ .Get "tag" }}</span>
+    </div>
+    <h3 class="roadmap-title">{{ .Get "title" }}</h3>
+    <div class="roadmap-body">
+      {{ .Inner | markdownify }}
+    </div>
+  </div>
+</div>

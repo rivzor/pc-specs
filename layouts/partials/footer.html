@@ -25,7 +25,8 @@
           <li><a href="/">Главная</a></li>
           <li><a href="/#pc-specs">PC Specs</a></li>
           <li><a href="/#faq">Частые вопросы</a></li>
-          <li><a href="https://rivzor.github.io/ri-wiki/">Wiki</a></li>
+          <li><a href="/#roadmap">Дорожная карта</a></li>
+          <li><a href="/docs">Вики</a></li>
         </ul>
       </div>
 
@@ -50,8 +51,8 @@
       <div class="copyright">
         © {{ now.Format "2006" }} rivzor. All rights reserved.
       </div>
-      <div class="built-with">
-        Built with <span>Hugo</span> & <span href="https://imfing.github.io/hextra/" class="accent">Hextra</span>
+      <div class="built-with" >
+        <a href="https://imfing.github.io/hextra/"> Built with <span>Hugo</span> & <span class="accent">Hextra</span></a>
       </div>
     </div>
   </div>
@@ -96,4 +97,18 @@
       }
     });
   });
+</script>
+
+<script>
+  // Скрипт определяет, что мы на внутренней странице (Вики, Сборка), а не на Главной
+  (function() {
+    const path = window.location.pathname;
+    // Проверяем: если путь НЕ корень и НЕ /pc-specs/ (для GitHub Pages), значит это статья
+    // Добавляем класс 'is-internal-page' на body
+    const isHome = path === '/' || path === '/pc-specs/' || path === '/pc-specs/index.html';
+    
+    if (!isHome) {
+      document.body.classList.add('is-internal-page');
+    }
+  })();
 </script>

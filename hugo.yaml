@@ -28,8 +28,9 @@ menu:
       params:
         type: link
     
-    - name: Вики
-      url: "https://rivzor.github.io/ri-wiki/"
+    - identifier: docs
+      name: Вики
+      pageRef: /docs
       weight: 2
       params:
         type: link

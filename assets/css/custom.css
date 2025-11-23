@@ -561,3 +561,359 @@ html.lenis {
   visibility: visible;
   transform: translateX(-50%) translateY(0) scale(1);
 }
+
+
+/* =========================
+   CYBER ROADMAP
+   ========================= */
+
+.roadmap-container {
+  position: relative;
+  padding: 2rem 0;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Вертикальная линия */
+.roadmap-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 19px; /* Центр точки */
+  width: 2px;
+  background: linear-gradient(
+    to bottom, 
+    transparent 0%, 
+    rgba(14, 165, 233, 0.2) 10%, /* Sky blue dim */
+    rgba(14, 165, 233, 0.2) 90%, 
+    transparent 100%
+  );
+  z-index: 0;
+}
+
+/* Элемент роадмапы */
+.roadmap-item {
+  position: relative;
+  margin-bottom: 2.5rem;
+  padding-left: 3.5rem; /* Отступ под точку */
+}
+
+/* --- МАРКЕР (ТОЧКА) --- */
+.roadmap-marker {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.roadmap-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid;
+  background: var(--background); /* Цвет фона сайта */
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+/* --- СТАТУСЫ --- */
+
+/* 1. DONE (Выполнено) */
+.roadmap-item[data-status="done"] .roadmap-dot {
+  background-color: #10b981; /* Green */
+  border-color: #10b981;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+}
+.roadmap-item[data-status="done"] .roadmap-content {
+  opacity: 0.7; /* Чуть тусклее, так как в прошлом */
+  border-left: 2px solid #10b981;
+}
+
+/* 2. ACTIVE (В процессе) - Самое красивое */
+.roadmap-item[data-status="active"] .roadmap-dot {
+  background-color: #0ea5e9; /* Sky Blue */
+  border-color: #0ea5e9;
+  box-shadow: 0 0 15px #0ea5e9;
+  width: 14px;
+  height: 14px;
+}
+.roadmap-item[data-status="active"] .roadmap-content {
+  border: 1px solid rgba(14, 165, 233, 0.5);
+  box-shadow: 0 0 30px -10px rgba(14, 165, 233, 0.3);
+  transform: scale(1.02); /* Чуть больше остальных */
+}
+
+/* Пульсация для активного */
+.roadmap-pulse {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #0ea5e9;
+  opacity: 0.6;
+  animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  z-index: 1;
+}
+@keyframes ping {
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+
+/* 3. PLANNED (В планах) */
+.roadmap-item[data-status="planned"] .roadmap-dot {
+  background-color: transparent;
+  border-color: #666;
+}
+.roadmap-item[data-status="planned"] .roadmap-content {
+  border-left: 2px dashed #666;
+  opacity: 0.8;
+}
+
+/* --- КАРТОЧКА --- */
+.roadmap-content {
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+}
+
+/* Темная тема */
+:is(html.dark) .roadmap-content {
+  background-color: rgba(20, 20, 20, 0.6);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.roadmap-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.roadmap-date {
+  font-family: monospace;
+  color: #888;
+}
+
+.roadmap-tag {
+  background: rgba(14, 165, 233, 0.1);
+  color: #0ea5e9;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.roadmap-item[data-status="done"] .roadmap-tag { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+.roadmap-item[data-status="planned"] .roadmap-tag { background: rgba(128, 128, 128, 0.1); color: #888; }
+
+.roadmap-title {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+
+/* =========================================
+   FIX: Удаление фона у "липких" блоков в сайдбарах
+   ========================================= */
+
+/* 1. ПРАВЫЙ САЙДБАР (Теги, Edit page) */
+/* Ищем внутри блока оглавления (.hextra-toc) любой div, который прилипает к низу */
+.hextra-toc div[class*="sticky"][class*="bottom-0"] {
+    background-color: transparent !important; /* Убираем белый/черный фон */
+    box-shadow: none !important;              /* Убираем тень-градиент */
+    border-top: none !important;              /* Убираем линию */
+    backdrop-filter: none !important;         /* На всякий случай */
+}
+
+/* Дополнительно: убираем фон у самих кнопок тегов, чтобы они висели в воздухе */
+.hextra-toc div[class*="sticky"][class*="bottom-0"] a {
+    background-color: rgba(128, 128, 128, 0.1) !important;
+    border: 1px solid rgba(128, 128, 128, 0.2) !important;
+    backdrop-filter: blur(5px); /* Легкое стекло для читаемости */
+}
+
+
+/* 2. ЛЕВЫЙ САЙДБАР (Меню) */
+/* Ищем внутри контейнера сайдбара любой div, который прилипает к низу */
+.hextra-sidebar-container div[class*="sticky"][class*="bottom-0"] {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border-top: none !important;
+}
+
+/* =========================================
+   TRUE GLASS PANEL v3 (Скриптовая защита)
+   ========================================= */
+
+/* 
+   Применяем ТОЛЬКО если JS добавил класс .is-internal-page 
+   Это гарантирует, что главная страница останется чистой.
+*/
+
+/* 1. Сбрасываем фоны у самой статьи, чтобы она стала прозрачной */
+/* body.is-internal-page article,
+body.is-internal-page article div {
+    background-color: transparent !important;
+    box-shadow: none !important;
+} */
+
+/* 2. Делаем стеклянную подложку вокруг контента */
+/* body.is-internal-page main { */
+    /* ЦВЕТ СТЕКЛА: Очень прозрачный (10-15%), чтобы видеть сетку */
+    /* background-color: rgba(255, 255, 255, 0.15) !important; */
+    
+    /* РАЗМЫТИЕ ФОНА: Самое важное для эффекта стекла */
+    /* backdrop-filter: blur(16px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(140%) !important; */
+    
+    /* Форма листа */
+    /* border-radius: 20px !important;
+    padding: 3rem 4rem !important; /* Отступы от краев стекла до текста */
+    /* margin-top: 2rem !important;
+    margin-bottom: 3rem !important; */
+    
+    /* Границы и объем */
+    /* border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.05),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.1) !important; */
+        
+    /* Чтобы не ломалась ширина */
+    /* max-width: 100%;
+    box-sizing: border-box; } */
+
+/* --- ТЕМНАЯ ТЕМА --- */
+/* :is(html.dark) body.is-internal-page main {
+    /* Черный, прозрачность 30% */
+    /* background-color: rgba(0, 0, 0, 0.3) !important; */
+    
+    /* Граница тоньше */
+    /* border: 1px solid rgba(255, 255, 255, 0.1) !important; */
+    
+    /* Тень */
+    /* box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+} */ 
+
+/* --- АДАПТИВНОСТЬ --- */
+/* @media (max-width: 768px) {
+    body.is-internal-page main {
+        padding: 1.5rem !important;
+        border-radius: 12px !important;
+    } */
+/* } */
+
+/* =========================
+   DONATE BUTTON (Glass Pill)
+   ========================= */
+
+.donate-container {
+  display: flex;
+  justify-content: center; /* Центрируем кнопку */
+  margin: 3rem 0;          /* Отступы сверху и снизу */
+}
+
+.donate-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 24px;
+  
+  /* СТЕКЛЯННЫЙ СТИЛЬ */
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 99px; /* Форма пилюли */
+  
+  text-decoration: none !important; /* Убираем подчеркивание */
+  color: #444;
+  font-weight: 600;
+  font-size: 0.95rem;
+  
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow: hidden; /* Чтобы блик не вылезал */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Темная тема */
+:is(html.dark) .donate-btn {
+  background: rgba(30, 30, 30, 0.5);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #eee;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* --- ИКОНКА (СЕРДЦЕ) --- */
+.donate-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.donate-heart {
+  width: 20px;
+  height: 20px;
+  color: #ef4444; /* Красный цвет */
+  /* Анимация пульсации */
+  animation: heartbeat 2s infinite ease-in-out;
+}
+
+/* Анимация биения сердца */
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  14% { transform: scale(1.15); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.15); }
+  70% { transform: scale(1); }
+}
+
+/* --- ЭФФЕКТ ПРИ НАВЕДЕНИИ (HOVER) --- */
+.donate-btn:hover {
+  transform: translateY(-2px); /* Легкий взлет */
+  background: rgba(255, 255, 255, 0.8);
+  border-color: #ef4444; /* Рамка краснеет */
+  color: #ef4444;        /* Текст краснеет */
+  box-shadow: 0 8px 25px rgba(239, 68, 68, 0.25); /* Красное свечение */
+}
+
+:is(html.dark) .donate-btn:hover {
+  background: rgba(40, 40, 40, 0.8);
+  border-color: #ef4444;
+}
+
+/* Блик (Shine effect) */
+.donate-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-25deg);
+  transition: none;
+}
+
+.donate-btn:hover .donate-shine {
+  animation: shine 0.75s;
+}
+
+@keyframes shine {
+  100% { left: 150%; }
+}
