@@ -3,18 +3,22 @@ description: "Персональный сайт: контактная инфор
 toc: false
 ---
 
+<!-- Заголовок -->
 {{< hextra/hero-headline >}}
   rivzor
-  
-  <br class="hx:sm:block hx:hidden" />- создаю простое и красивое
+  <br class="max-sm:hidden" />
+  <span class="font-light text-4xl">- создаю простое и красивое</span>
 {{< /hextra/hero-headline >}}
 
 {{< hextra/hero-subtitle >}}
-  Работаю с инфраструктурой, автоматизацией CI/CD&nbsp;<br class="hx:sm:block hx:hidden" />и оптимизацией delivery-процессов.
+  Работаю с инфраструктурой, автоматизацией CI/CD
+  <br class="max-sm:hidden" />
+  и оптимизацией delivery-процессов.
 {{< /hextra/hero-subtitle >}}
 
 <div style="padding-top:1rem"></div>
 
+<!-- Навыки -->
 <div class="flex flex-wrap items-center justify-center gap-4">
 {{< hextra/hero-badge >}}
   <div class="hx:w-2 hx:h-2 hx:rounded-full hx:bg-sky-500"></div>
@@ -34,16 +38,26 @@ toc: false
 {{< /hextra/hero-badge >}}
 </div>
 
-### Мои контакты
+<!-- Контакты -->
+<h3 class="text-center text-2xl font-bold mt-12 mb-6">Мои контакты</h3>
 
 {{< cards >}}
   {{< card link="https://t.me/rivzor" title="Telegram" icon="telegram" >}}
-  {{< card link="https://discordapp.com/users/346701837736476687" title="Discord" icon="discord" >}}
   {{< card link="https://github.com/rivzor" title="Github" icon="github" >}}
+  {{< card link="https://steamcommunity.com/id/rivzorx/" title="Steam" icon="steam" >}}
+  {{< card link="https://discordapp.com/users/346701837736476687" title="Discord" icon="discord" >}}
+  {{< card link="mailto:i@rivzor.ru" title="Email" icon="mail" >}}
 {{< /cards >}}
 
-
-<div style="text-align: center; margin: 3rem 0 2rem;"><span style="font-size: 2.2rem; font-weight: 800; color: var(--primary);">Моя сборка</span></div>
+<!-- Разделитель -->
+<div class="my-16 border-t border-neutral-200 dark:border-neutral-800"></div>
+    
+<!-- Раздел с моей сборкой -->
+<div id="pc-specs" style="text-align: center; margin: 3rem 0 2rem; scroll-margin-top: 6rem;">
+  <span style="font-size: 2.2rem; font-weight: 800; color: var(--primary);">
+    Моя сборка
+  </span>
+</div>
 
 {{< hextra/feature-grid cols="2" >}}
 
@@ -59,17 +73,49 @@ toc: false
     subtitle="SSD NVMe 1 ТБ — DEXP<br>SSD 240 ГБ — SATA<br>HDD 1 ТБ — Seagate<br>HDD 1 ТБ — WD" 
     >}}
 
-
 {{< /hextra/feature-grid >}}
-
 
 <div style="padding-top:1rem"></div>
 
-{{< 
-hextra/feature-card 
-title="Периферия" 
-subtitle="**Наушники:** Dark Project HS5<br>**Клавиатура:** Ajazz AK820 Pro — 75%, RGB, 2.4 ГГц/Bluetooth/провод, hot-swap<br>**Мышь:** VGN F1 MOBA — сенсор PAW3395, до 26 000 DPI, частота 4000 Гц, вес ~55 г<br>**Монитор:** MSI Optix G241 — 23.8″, IPS, 144 Гц, Full HD" 
->}}
+<div class="mt-6">
+  {{< hextra/feature-card 
+    title="Периферия" 
+    subtitle="**Монитор:** MSI Optix G241 (IPS, 144Hz)<br>**Клавиатура:** Ajazz AK820 Pro (Gasket mount)<br>**Мышь:** VGN F1 MOBA (PAW3395, 55g)<br>**Звук:** Dark Project HS5" 
+  >}}
+</div>
 
 
 
+
+<!-- Разделитель -->
+<div id="faq" style="text-align: left; margin: 4rem 0 2rem;">
+<span style="font-size: 1.6rem; font-weight: 800; color: var(--primary);">Частые вопросы</span>
+</div>
+
+
+{{< faq title="Почему ты выбрал Ryzen 5600?" >}}
+В 2023 году это был **лучший** процессор по соотношению цена/производительность. 
+Он холодный, легко берет разгон до `4.6 ГГц` и отлично работает с памятью 3600 МГц.<br>По прежнему считаю его отличным решением в своей ценовой категории.
+{{< /faq >}}
+
+{{< faq title="Какой софт используешь для деплоя?" >}}
+В основном это связка:
+1. **Docker** для контейнеризации.
+2. **GitHub Actions** для CI/CD пайплайнов.
+{{< /faq >}}
+
+{{< faq title="Как организуешь свои задачи?" >}}
+Для каждого проекта создаю небольшой {{< tip "Todoist — сервис для управления задачами и составления списков дел.">}}**Todoist**{{< /tip >}} и следую ему, попутно добавляя новые задачи
+{{< /faq >}}
+
+{{< faq title="Твоя любимая игра всех времен?" >}}
+Безусловно {{< tip "«Ведьмак 3: Дикая Охота» (англ. The Witcher 3: Wild Hunt) — компьютерная игра в жанре action/RPG, разработанная и изданная польской студией CD Projekt RED" >}}Witcher 3{{< /tip >}}
+{{< /faq >}}
+
+{{< faq title="C++: Указатели vs Ссылки?" >}}
+Указатели
+{{< /faq >}}
+
+{{< faq title="Нужен ли сторонний антивирус?" >}}
+Windows Defender + голова на плечах = достаточно.
+{{< /faq >}}

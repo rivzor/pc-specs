@@ -1,0 +1,99 @@
+{{/* layouts/partials/footer.html */}}
+<footer class="custom-glass-footer">
+  <!-- Светящаяся линия сверху -->
+  <div class="footer-cyber-line"></div>
+
+  <div class="footer-container">
+    <div class="footer-grid">
+      
+      <!-- КОЛОНКА 1: Бренд -->
+      <div class="footer-brand-col">
+        <div class="footer-logo-row">
+          <span class="footer-brand-name">rivzor</span>
+        </div>
+        <p class="footer-desc">
+          Персональная база знаний, гайды по железу и заметки DevOps инженера.
+          <br><br>
+          Создаю простое и красивое.
+        </p>
+      </div>
+
+      <!-- КОЛОНКА 2: Навигация -->
+      <div class="footer-nav-col">
+        <h3 class="footer-title">Навигация</h3>
+        <ul class="footer-links">
+          <li><a href="/">Главная</a></li>
+          <li><a href="/#pc-specs">PC Specs</a></li>
+          <li><a href="/#faq">Частые вопросы</a></li>
+          <li><a href="https://rivzor.github.io/ri-wiki/">Wiki</a></li>
+        </ul>
+      </div>
+
+      <!-- КОЛОНКА 3: Контакты -->
+      <div class="footer-social-col">
+        <h3 class="footer-title">Контакты</h3>
+        <div class="footer-icons">
+          <!-- Telegram -->
+          <a href="https://t.me/rivzor" target="_blank" class="social-btn telegram">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          </a>
+          <!-- GitHub -->
+          <a href="https://github.com/rivzor" target="_blank" class="social-btn github">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Нижняя полоса -->
+    <div class="footer-bottom">
+      <div class="copyright">
+        © {{ now.Format "2006" }} rivzor. All rights reserved.
+      </div>
+      <div class="built-with">
+        Built with <span>Hugo</span> & <span href="https://imfing.github.io/hextra/" class="accent">Hextra</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Lenis Smooth Scroll (Библиотека для дорогого скролла) -->
+<script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script> 
+<script>
+  // Инициализация
+  const lenis = new Lenis({
+    duration: 1.2,       // Длительность скролла (чем больше, тем плавнее)
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Функция плавности
+    direction: 'vertical', 
+    gestureDirection: 'vertical', 
+    smooth: true,
+    mouseMultiplier: 1,  // Чувствительность мыши
+    smoothTouch: false,  // На телефонах лучше оставлять нативный скролл
+    touchMultiplier: 2,
+  })
+
+  // Связь с анимацией браузера
+  function raf(time) {
+    lenis.raf(time)
+    requestAnimationFrame(raf)
+  }
+  requestAnimationFrame(raf)
+
+  // ИНТЕГРАЦИЯ С ЯКОРЯМИ (ЧТОБЫ РАБОТАЛА ТВОЯ ССЫЛКА)
+  document.querySelectorAll('a[href^="/#"], a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      // Получаем только хэш (например #pc-specs)
+      const targetId = this.getAttribute('href').replace('/', ''); 
+      if (targetId.startsWith('#')) {
+          const target = document.querySelector(targetId);
+          if (target) {
+            e.preventDefault(); // Отменяем стандартный прыжок
+            lenis.scrollTo(target, {
+                offset: -100, // Отступ сверху (под хедер), настрой под себя!
+                immediate: false // Включить плавную анимацию
+            });
+          }
+      }
+    });
+  });
+</script>

@@ -36,10 +36,9 @@ menu:
 
     - identifier: contacts
       name: Контакты
-      pageRef: /#contacts
       weight: 4
       params:
-        type: link
+        type: menu
 
     - name: Telegram ↗
       url: https://t.me/rivzor
@@ -65,17 +64,11 @@ menu:
         type: link
         icon: discord
 
-    - name: GitHub
-      weight: 9
-      url: "https://github.com/rivzor/pc-specs"
-      params:
-        icon: github
-
-    - name: Theme Toggle
+    - name: Сменить тему
       weight: 10
       params:
         type: theme-toggle
-        label: true
+        label: false
 
 
 defaultContentLanguage: ru
@@ -108,19 +101,25 @@ params:
       lang: ru
       theme: preferred_color_scheme
 
+
   enableInlineShortcodes: true
 
   banner:
-    key: 'announcement-v.0.1'
+    key: 'welcome-v1'
     message: |
       🎉 Добро пожаловать на мой сайт!
 
   displayUpdatedDate: true
-  dateFormat: "15 Oct 2023"
+  dateFormat: "02 Jan 2006"
 
   theme:
     default: system
     displayToggle: true
+    
+    # Настройки ширины контента
+    width: wide # wide, normal, full
+    toc:
+      float: true
 
   navbar:
     displayTitle: true
@@ -138,12 +137,14 @@ params:
     displayPoweredBy: false
     width: wide
 
+  # Поиск (улучшенный конфиг)
   search:
     enable: true
     type: flexsearch
     flexsearch:
       index: content
       tokenize: forward
+      context: true
 
   editURL:
     enable: false
@@ -152,11 +153,7 @@ params:
   blog:
     list:
       displayTags: true
-      sortBy: date
-      sortOrder: desc
-      pagerSize: 20
-    article:
-      displayPagination: true
+      pagerSize: 10
 
   highlight:
     copy:

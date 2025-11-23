@@ -1,0 +1,167 @@
+{{/* layouts/shortcodes/faq.html */}}
+
+<div class="custom-faq-card">
+  <details class="faq-details">
+    <summary class="faq-summary">
+      <span class="faq-title">{{ .Get "title" }}</span>
+      <span class="faq-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </span>
+    </summary>
+    <div class="faq-content">
+      <div class="faq-body">
+        {{ .Inner | markdownify }}
+      </div>
+    </div>
+  </details>
+</div>
+
+<style>
+  /* --- 1. КАРКАС --- */
+  .custom-faq-card {
+    background-color: transparent;
+    border: 1px solid rgba(136, 136, 136, 0.2);
+    border-radius: 0.75rem;
+    margin-bottom: 1rem;
+    /* Убрали overflow: hidden отсюда, чтобы подсказки могли торчать */
+    transition: all 0.2s ease;
+    position: relative; 
+    z-index: 1; /* Базовый слой */
+  }
+
+  /* Когда наводим на карточку, поднимаем её выше соседних, чтобы подсказка перекрывала нижнюю карточку */
+  .custom-faq-card:hover {
+    border-color: rgba(136, 136, 136, 0.4);
+    background-color: rgba(136, 136, 136, 0.03);
+    z-index: 10; 
+  }
+
+  /* --- 2. ЗАГОЛОВОК --- */
+  .faq-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+  .faq-summary::-webkit-details-marker { display: none; }
+
+  .faq-title {
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: inherit;
+  }
+
+  /* --- 3. ИКОНКА --- */
+  .faq-icon {
+    display: flex;
+    align-items: center;
+    color: #888;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  details[open] .faq-icon { transform: rotate(180deg); }
+
+  /* --- 4. АНИМАЦИЯ КОНТЕНТА --- */
+  .faq-content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Здесь overflow: hidden нужен для анимации, но мы его будем снимать скриптом */
+    overflow: hidden; 
+  }
+
+  details[open] .faq-content { grid-template-rows: 1fr; }
+  
+  details.is-closing .faq-content { grid-template-rows: 0fr !important; }
+
+  .faq-body {
+    padding: 0 1.25rem 1.25rem 1.25rem;
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    border-top: 1px solid transparent;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    /* Важно: изначально скрываем, но скриптом разрешим вылезать */
+    overflow: hidden; 
+  }
+
+  /* Открытое состояние */
+  details[open] .faq-body {
+    opacity: 1;
+    transform: translateY(0);
+    border-top-color: rgba(136, 136, 136, 0.1);
+    padding-top: 1rem;
+  }
+  
+  details.is-closing .faq-body {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  /* --- 5. DARK MODE --- */
+  :is(html.dark, body.dark) .custom-faq-card {
+    border-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.02);
+  }
+  :is(html.dark, body.dark) .custom-faq-card:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  :is(html.dark, body.dark) .faq-body { color: #a3a3a3; }
+  :is(html.dark, body.dark) .faq-title { color: #f5f5f5; }
+</style>
+
+<script>
+  if (typeof window.faqScriptInitialized === 'undefined') {
+    window.faqScriptInitialized = true;
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.body.addEventListener('click', (e) => {
+        const summary = e.target.closest('.faq-summary');
+        if (!summary) return;
+
+        const details = summary.parentElement;
+        if (!details.classList.contains('faq-details')) return;
+
+        const content = details.querySelector('.faq-content');
+        const body = details.querySelector('.faq-body');
+
+        e.preventDefault();
+
+        if (details.hasAttribute('open')) {
+          // --- ЗАКРЫВАЕМ ---
+          if (details.classList.contains('is-closing')) return;
+          
+          // 1. Срочно возвращаем overflow: hidden, чтобы анимация закрытия была красивой
+          content.style.overflow = 'hidden';
+          body.style.overflow = 'hidden';
+
+          details.classList.add('is-closing');
+          
+          setTimeout(() => {
+            details.removeAttribute('open');
+            details.classList.remove('is-closing');
+          }, 300);
+          
+        } else {
+          // --- ОТКРЫВАЕМ ---
+          details.setAttribute('open', 'true');
+          
+          // 2. Ждем пока пройдет анимация (350мс) и РАЗРЕШАЕМ ВЫЛЕЗАТЬ ПОДСКАЗКАМ
+          setTimeout(() => {
+             if(details.hasAttribute('open') && !details.classList.contains('is-closing')) {
+                 content.style.overflow = 'visible';
+                 body.style.overflow = 'visible';
+             }
+          }, 350);
+        }
+      });
+    });
+  }
+</script>
