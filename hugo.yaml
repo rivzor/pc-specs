@@ -2,6 +2,12 @@ baseURL: "https://rivzor.github.io/pc-specs/"
 languageCode: "ru-ru"
 title: "rivzor"
 
+enableRobotsTXT: true
+enableGitInfo: true
+# enableEmoji: false
+hasCJKLanguage: true
+canonifyURLs: true
+
 outputs:
   home: [html, llms]
   page: [html]
@@ -21,14 +27,13 @@ menu:
       weight: 1
       params:
         type: link
+    
+    - name: Вики
+      url: "https://rivzor.github.io/ri-wiki/"
+      weight: 2
+      params:
+        type: link
 
-    # - identifier: docs
-    #   name: Мои гайды
-    #   pageRef: /docs
-    #   weight: 2
-    #   params:
-    #     type: link
-      
     - identifier: contacts
       name: Контакты
       pageRef: /#contacts
@@ -130,8 +135,8 @@ params:
   footer:
     enable: true
     displayCopyright: true
-    displayPoweredBy: true
-    width: normal
+    displayPoweredBy: false
+    width: wide
 
   search:
     enable: true
@@ -159,7 +164,7 @@ params:
       display: hover
 
   page:
-    width: full
+    width: wide
     tabs:
       sync: true
 
