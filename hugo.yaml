@@ -2,11 +2,13 @@ baseURL: "https://rivzor.github.io/pc-specs/"
 languageCode: "ru-ru"
 title: "rivzor"
 
+canonifyURLs: true
+relativeURLs: true
+
 enableRobotsTXT: true
 enableGitInfo: true
 # enableEmoji: false
 hasCJKLanguage: true
-canonifyURLs: true
 
 outputs:
   home: [html, llms]
