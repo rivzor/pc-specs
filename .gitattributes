@@ -1,0 +1,6 @@
+# Указываем гиту всегда использовать LF (Linux) переносы строк для текстовых файлов
+* text=auto eol=lf
+
+# Исключения для бинарников (картинки, шрифты)
+*.{png,jpg,jpeg,gif,webp,ico,svg} binary
+*.{woff,woff2,eot,ttf,otf} binary
