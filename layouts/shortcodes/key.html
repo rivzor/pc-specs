@@ -1,0 +1,17 @@
+{{/* layouts/shortcodes/key.html */}}
+<span class="keyboard-sequence">
+  {{- /* Пытаемся получить входную строку: либо из параметра, либо из содержимого */ -}}
+  {{- $input := .Get 0 | default .Inner -}}
+  
+  {{- /* Разбиваем строку по знаку плюса */ -}}
+  {{- $keys := split $input "+" -}}
+  
+  {{- range $index, $key := $keys -}}
+    {{- /* Если это не первая клавиша, добавляем плюсик между ними */ -}}
+    {{- if $index -}}
+      <span class="key-separator">+</span>
+    {{- end -}}
+    {{- /* ИСПРАВЛЕНИЕ: Используем strings.TrimSpace вместо trim */ -}}
+    <kbd>{{ $key | strings.TrimSpace }}</kbd>
+  {{- end -}}
+</span>

@@ -35,35 +35,13 @@ menu:
       params:
         type: link
 
-    - identifier: contacts
-      name: Контакты
+    - identifier: repo
+      name: Репозиторий ↗
+      url: https://github.com/rivzor/pc-specs
       weight: 4
       params:
-        type: menu
-
-    - name: Telegram ↗
-      url: https://t.me/rivzor
-      parent: contacts
-      weight: 5
-      params:
         type: link
-        icon: telegram
-
-    - name: Vk ↗
-      url: https://vk.com/rivzor
-      parent: contacts
-      weight: 6
-      params:
-        type: link
-        icon: vk
-
-    - name: Discord ↗
-      url: https://discordapp.com/users/346701837736476687
-      parent: contacts
-      weight: 7
-      params:
-        type: link
-        icon: discord
+        icon: github
 
     - name: Сменить тему
       weight: 10
@@ -148,7 +126,7 @@ params:
       context: true
 
   editURL:
-    enable: false
+    enable: true
     base: "https://github.com/rivzor/pc-specs/edit/main"
 
   blog:

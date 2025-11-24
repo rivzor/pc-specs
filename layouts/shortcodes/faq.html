@@ -25,17 +25,16 @@
     border: 1px solid rgba(136, 136, 136, 0.2);
     border-radius: 0.75rem;
     margin-bottom: 1rem;
-    /* Убрали overflow: hidden отсюда, чтобы подсказки могли торчать */
-    transition: all 0.2s ease;
-    position: relative; 
-    z-index: 1; /* Базовый слой */
+    position: relative;
+    /* Важно для GPU ускорения */
+    transform: translate3d(0,0,0);
+    transition: background-color 0.2s, border-color 0.2s;
   }
 
-  /* Когда наводим на карточку, поднимаем её выше соседних, чтобы подсказка перекрывала нижнюю карточку */
   .custom-faq-card:hover {
     border-color: rgba(136, 136, 136, 0.4);
     background-color: rgba(136, 136, 136, 0.03);
-    z-index: 10; 
+    z-index: 5;
   }
 
   /* --- 2. ЗАГОЛОВОК --- */
@@ -47,6 +46,7 @@
     cursor: pointer;
     list-style: none;
     user-select: none;
+    -webkit-tap-highlight-color: transparent;
   }
   .faq-summary::-webkit-details-marker { display: none; }
 
@@ -61,50 +61,73 @@
     display: flex;
     align-items: center;
     color: #888;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
   }
-  details[open] .faq-icon { transform: rotate(180deg); }
+  
+  /* Поворот иконки при наличии класса .is-expanded */
+  details.is-expanded .faq-icon {
+    transform: rotate(180deg);
+  }
 
-  /* --- 4. АНИМАЦИЯ КОНТЕНТА --- */
+  /* --- 4. АНИМАЦИЯ КОНТЕНТА (GRID TRICK) --- */
   .faq-content {
     display: grid;
+    /* По умолчанию закрыто */
     grid-template-rows: 0fr;
-    transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    /* Здесь overflow: hidden нужен для анимации, но мы его будем снимать скриптом */
-    overflow: hidden; 
+    /* Очень плавная кривая Безье */
+    transition: grid-template-rows 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    overflow: hidden; /* Обязательно скрываем вылезающее во время анимации */
   }
 
-  details[open] .faq-content { grid-template-rows: 1fr; }
-  
-  details.is-closing .faq-content { grid-template-rows: 0fr !important; }
+  /* Состояние "Раскрыто" */
+  details.is-expanded .faq-content {
+    grid-template-rows: 1fr;
+  }
 
+  /* Когда анимация закончилась и класс overflow-visible добавлен скриптом */
+  details.is-expanded.overflow-visible .faq-content {
+    overflow: visible;
+  }
+  
+  details.is-expanded.overflow-visible .faq-body {
+    overflow: visible;
+  }
+
+  /* --- 5. АНИМАЦИЯ ТЕКСТА (OPACITY) --- */
   .faq-body {
-    padding: 0 1.25rem 1.25rem 1.25rem;
-    color: #666;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    border-top: 1px solid transparent;
+    min-height: 0;
+    padding: 0 1.25rem;
+    /* Скрываем отступы в закрытом состоянии, чтобы не было рывка */
+    padding-bottom: 0;
     opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    /* Важно: изначально скрываем, но скриптом разрешим вылезать */
-    overflow: hidden; 
+    transition: opacity 0.3s ease, padding 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    box-sizing: border-box;
+    overflow: hidden;
   }
 
-  /* Открытое состояние */
-  details[open] .faq-body {
+  details.is-expanded .faq-body {
     opacity: 1;
-    transform: translateY(0);
-    border-top-color: rgba(136, 136, 136, 0.1);
-    padding-top: 1rem;
-  }
-  
-  details.is-closing .faq-body {
-    opacity: 0;
-    transform: translateY(-10px);
+    padding-bottom: 1.25rem;
+    /* Небольшая задержка появления текста, чтобы рамка успела поехать */
+    transition-delay: 0.1s; 
   }
 
-  /* --- 5. DARK MODE --- */
+  /* Линия разделитель */
+  .faq-body::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: rgba(136, 136, 136, 0.1);
+    margin-bottom: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  details.is-expanded .faq-body::before {
+    opacity: 1;
+  }
+
+  /* --- DARK MODE --- */
   :is(html.dark, body.dark) .custom-faq-card {
     border-color: rgba(255, 255, 255, 0.1);
     background-color: rgba(255, 255, 255, 0.02);
@@ -118,48 +141,65 @@
 </style>
 
 <script>
-  if (typeof window.faqScriptInitialized === 'undefined') {
-    window.faqScriptInitialized = true;
+  if (typeof window.faqLogicInitialized === 'undefined') {
+    window.faqLogicInitialized = true;
 
     document.addEventListener("DOMContentLoaded", () => {
-      document.body.addEventListener('click', (e) => {
+      const container = document.body;
+
+      container.addEventListener('click', (e) => {
         const summary = e.target.closest('.faq-summary');
         if (!summary) return;
 
         const details = summary.parentElement;
         if (!details.classList.contains('faq-details')) return;
 
-        const content = details.querySelector('.faq-content');
-        const body = details.querySelector('.faq-body');
-
+        // 1. Останавливаем стандартное поведение браузера (рывок)
         e.preventDefault();
 
-        if (details.hasAttribute('open')) {
-          // --- ЗАКРЫВАЕМ ---
-          if (details.classList.contains('is-closing')) return;
-          
-          // 1. Срочно возвращаем overflow: hidden, чтобы анимация закрытия была красивой
-          content.style.overflow = 'hidden';
-          body.style.overflow = 'hidden';
+        // Если уже идет анимация, игнорируем клики (защита от дёрганья)
+        if (details.dataset.isAnimating === 'true') return;
+        
+        details.dataset.isAnimating = 'true';
+        const content = details.querySelector('.faq-content');
 
-          details.classList.add('is-closing');
+        // --- ЛОГИКА ЗАКРЫТИЯ ---
+        if (details.classList.contains('is-expanded')) {
+          // Сначала убираем overflow visible, чтобы обрезать контент при сворачивании
+          details.classList.remove('overflow-visible');
           
-          setTimeout(() => {
-            details.removeAttribute('open');
-            details.classList.remove('is-closing');
-          }, 300);
-          
-        } else {
-          // --- ОТКРЫВАЕМ ---
+          // Даем браузеру кадр на применение overflow: hidden
+          requestAnimationFrame(() => {
+            // Запускаем анимацию сворачивания
+            details.classList.remove('is-expanded');
+            
+            // Ждем конца CSS перехода
+            content.addEventListener('transitionend', () => {
+              details.removeAttribute('open'); // Убираем атрибут open из DOM
+              details.dataset.isAnimating = 'false';
+            }, { once: true });
+          });
+        } 
+        
+        // --- ЛОГИКА ОТКРЫТИЯ ---
+        else {
+          // 1. Добавляем open в DOM (высота всё еще 0fr из-за CSS)
           details.setAttribute('open', 'true');
           
-          // 2. Ждем пока пройдет анимация (350мс) и РАЗРЕШАЕМ ВЫЛЕЗАТЬ ПОДСКАЗКАМ
-          setTimeout(() => {
-             if(details.hasAttribute('open') && !details.classList.contains('is-closing')) {
-                 content.style.overflow = 'visible';
-                 body.style.overflow = 'visible';
-             }
-          }, 350);
+          // 2. Двойной RAF (RequestAnimationFrame) гарантирует, что браузер отрисовал начальное состояние (0fr)
+          // перед тем как мы добавим класс для расширения (1fr). Это и есть секрет плавности.
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              details.classList.add('is-expanded');
+              
+              // Ждем конца анимации
+              content.addEventListener('transitionend', () => {
+                // Разрешаем подсказкам вылезать (overflow: visible)
+                details.classList.add('overflow-visible');
+                details.dataset.isAnimating = 'false';
+              }, { once: true });
+            });
+          });
         }
       });
     });

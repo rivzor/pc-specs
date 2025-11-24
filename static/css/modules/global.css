@@ -1,0 +1,111 @@
+/* =========================================
+   GLOBAL: FINAL FIX v2 (Tabs & Z-Index)
+   ========================================= */
+
+:root {
+  --hextra-max-navbar-width: 90rem;
+  --hextra-max-footer-width: 80rem;
+  --badge-python: #0ea5e9; --badge-cpp: #1e40af; --badge-csharp: #7c3aed; --badge-js: #f59e0b;
+}
+
+/* Tailwind Colors */
+.hx\:bg-sky-500 { background-color: var(--badge-python) !important; }
+.hx\:bg-blue-600 { background-color: var(--badge-cpp) !important; }
+.hx\:bg-purple-600 { background-color: var(--badge-csharp) !important; }
+.hx\:bg-yellow-400 { background-color: var(--badge-js) !important; }
+.bg-sky-500 { background-color: var(--badge-python) !important; }
+.bg-blue-600 { background-color: var(--badge-cpp) !important; }
+.bg-purple-600 { background-color: var(--badge-csharp) !important; }
+.bg-yellow-400 { background-color: var(--badge-js) !important; }
+
+/* --- 1. ФОН-СЕТКА --- */
+body { 
+    position: relative; 
+    background-color: #ffffff; 
+    min-height: 100vh;
+}
+
+body::before {
+  content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
+  z-index: -9999 !important; 
+  pointer-events: none !important; 
+  background-size: 50px 50px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 90%);
+  mask-image: linear-gradient(to bottom, black 20%, transparent 90%);
+}
+
+.dark body { background-color: #0a0a0a; }
+.dark body::before {
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  -webkit-mask-image: linear-gradient(to bottom, black 10%, transparent 70%);
+  mask-image: linear-gradient(to bottom, black 10%, transparent 70%);
+}
+
+/* --- 2. КОНТЕНТ --- */
+main, article, .hx-w-full {
+    position: relative;
+    z-index: 10 !important; 
+}
+
+/* --- 3. КНОПКИ ТАБОВ --- */
+button, .hextra-tabs-toggle, [role="tab"] {
+    position: relative;
+    z-index: 50 !important;
+    cursor: pointer !important;
+}
+
+/* --- 4. САЙДБАРЫ --- */
+.hextra-sidebar-container { border-right: none !important; }
+
+.hextra-toc div[class*="sticky"][class*="bottom-0"],
+.hextra-sidebar-container div[class*="sticky"][class*="bottom-0"] {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border-top: none !important;
+    backdrop-filter: none;
+    pointer-events: none;
+}
+.hextra-toc div[class*="sticky"][class*="bottom-0"] a {
+    background-color: rgba(128, 128, 128, 0.1) !important;
+    border: 1px solid rgba(128, 128, 128, 0.2) !important;
+    backdrop-filter: blur(5px);
+    pointer-events: auto; 
+}
+
+/* --- ПРОЧЕЕ --- */
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
+details[open] + .grid-rows-\[0fr\] { grid-template-rows: 1fr; }
+
+/* LENIS */
+html.lenis { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-scrolling iframe { pointer-events: none; }
+
+
+/* =========================================
+   CRITICAL TAB FIX (Вот это починит карточки)
+   ========================================= */
+
+/* Если таб выбран (selected), показываем его ПРИНУДИТЕЛЬНО, даже если есть класс hidden */
+.hextra-tabs-panel[data-state="selected"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+    animation: tabFadeIn 0.3s ease forwards;
+}
+
+/* Если таб не выбран - скрываем */
+.hextra-tabs-panel[aria-hidden="true"],
+.hextra-tabs-panel[data-state="unselected"] {
+    display: none !important;
+}
+
+@keyframes tabFadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}

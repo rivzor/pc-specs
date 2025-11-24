@@ -1,0 +1,68 @@
+{{- /* layouts/shortcodes/download-card.html */ -}}
+<div class="dl-card">
+  <div class="dl-main">
+    <div class="dl-header-row">
+      <div class="dl-icon-box">
+        {{- $icon := .Get "icon" -}}
+        
+        {{- if eq $icon "file-text" -}}
+           {{- /* Иконка ДОКУМЕНТА (для гайдов) */ -}}
+           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+        
+        {{- else if eq $icon "zip" -}}
+           {{- /* Иконка АРХИВА (для zip/rar) */ -}}
+           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+
+        {{- else -}}
+           {{- /* Иконка ПО УМОЛЧАНИЮ (Монитор/Windows) */ -}}
+           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+        {{- end -}}
+      </div>
+      <div class="dl-title-wrap">
+        <h3 class="dl-title">{{ .Get "title" }}</h3>
+        {{- with .Get "version" -}}<span class="dl-version">{{ . }}</span>{{- end -}}
+      </div>
+    </div>
+
+    {{- with .Get "desc" -}}
+    <div class="dl-desc">{{ . }}</div>
+    {{- end -}}
+
+    <div class="dl-tags">
+      {{- /* Парсим теги */ -}}
+      {{- $tags := .Get "tags" -}}
+      {{- if $tags -}}
+        {{- range split $tags "," -}}
+          <span class="dl-tag" data-label="{{ . | strings.TrimSpace }}">{{ . | strings.TrimSpace }}</span>
+        {{- end -}}
+      {{- end -}}
+      
+      {{- /* Старые параметры для совместимости */ -}}
+      {{- with .Get "size" -}}<span class="dl-tag">{{ . }}</span>{{- end -}}
+      {{- with .Get "arch" -}}<span class="dl-tag" data-label="{{ . }}">{{ . }}</span>{{- end -}}
+    </div>
+  </div>
+
+  <div class="dl-actions">
+    {{- with .Get "iso" -}}
+    <a href="{{ . }}" class="dl-btn primary" target="_blank">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 9l-5 5-5-5M12 12.8V2.5"/></svg>
+      {{ $.Get "btn_text" | default "Скачать" }}
+    </a>
+    {{- end -}}
+
+    {{- with .Get "mirror" -}}
+    <a href="{{ . }}" class="dl-btn mirror" target="_blank">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+      Зеркало
+    </a>
+    {{- end -}}
+
+    {{- with .Get "torrent" -}}
+    <a href="{{ . }}" class="dl-btn secondary" target="_blank">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Torrent
+    </a>
+    {{- end -}}
+  </div>
+</div>

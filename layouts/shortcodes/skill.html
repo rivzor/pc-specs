@@ -1,0 +1,5 @@
+{{ $color := .Get "color" | default "#777" }}
+<div class="skill-badge" style="--skill-glow: {{ $color }}">
+  <div class="skill-dot"></div>
+  <span class="skill-name">{{ .Inner }}</span>
+</div>

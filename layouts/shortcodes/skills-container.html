@@ -1,0 +1,12 @@
+{{ $align := .Get "align" | default "center" }}
+{{ $justify := "center" }}
+
+{{ if eq $align "left" }}
+  {{ $justify = "flex-start" }}
+{{ else if eq $align "right" }}
+  {{ $justify = "flex-end" }}
+{{ end }}
+
+<div class="skills-wrapper" style="justify-content: {{ $justify }};">
+  {{ .Inner }}
+</div>

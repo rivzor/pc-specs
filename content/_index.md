@@ -1,6 +1,8 @@
 ---
 description: "Персональный сайт: контактная информация, PC specs, гайды и проекты."
 toc: false
+
+
 ---
 
 <!-- Заголовок -->
@@ -16,27 +18,20 @@ toc: false
   и оптимизацией delivery-процессов.
 {{< /hextra/hero-subtitle >}}
 
-<div style="padding-top:1rem"></div>
-
 <!-- Навыки -->
-<div class="flex flex-wrap items-center justify-center gap-4">
-{{< hextra/hero-badge >}}
-  <div class="hx:w-2 hx:h-2 hx:rounded-full hx:bg-sky-500"></div>
-  <span>Python</span>
-{{< /hextra/hero-badge >}}<a style="margin-right: 0.4rem;"></a>
-{{< hextra/hero-badge >}}
-  <div class="hx:w-2 hx:h-2 hx:rounded-full hx:bg-blue-600"></div>
-  <span>C++</span>
-{{< /hextra/hero-badge >}}<a style="margin-right: 0.4rem;"></a>
-{{< hextra/hero-badge >}}
-  <div class="hx:w-2 hx:h-2 hx:rounded-full hx:bg-purple-600"></div>
-  <span>C#</span>
-{{< /hextra/hero-badge >}}<a style="margin-right: 0.4rem;"></a>
-{{< hextra/hero-badge >}}
-  <div class="hx:w-2 hx:h-2 hx:rounded-full hx:bg-yellow-400"></div>
-  <span>JS</span>
-{{< /hextra/hero-badge >}}
-</div>
+{{< skills-container align="left" >}}
+
+  {{< skill color="#0ea5e9" >}}Python{{< /skill >}}
+  
+  {{< skill color="#2563eb" >}}C++{{< /skill >}}
+  
+  {{< skill color="#eab308" >}}JavaScript{{< /skill >}}
+  
+  {{< skill color="#00add8" >}}Golang{{< /skill >}}
+  
+  {{< skill color="#ef4444" >}}Git{{< /skill >}}
+
+{{< /skills-container >}}
 
 <!-- Контакты -->
 <h3 class="text-center text-2xl font-bold mt-12 mb-6">Мои контакты</h3>
@@ -120,6 +115,8 @@ toc: false
 Windows Defender + голова на плечах = достаточно.
 {{< /faq >}}
 
+<!-- Недавние статьи -->
+{{< latest-posts section="docs" >}}
 
 <!-- Разделитель -->
 <div id="roadmap" style="text-align: left; margin: 4rem 0 0;">
@@ -133,8 +130,9 @@ Windows Defender + голова на плечах = достаточно.
   {{< roadmap-item status="active" date="Ноябрь 2025" title="Рефакторинг сайта" tag="Текущая задача" >}}
   Полное обновление дизайна.
   - [x] Переход на Hextra
+  - [x] Поднятие домена `rivzor.space`
   - [x] Стеклянный дизайн (Glassmorphism)
-  - [ ] Добавление темной темы для графиков
+  - [x] Добавление темной темы для графиков
   - [ ] Создание раздела `Вики` внутри этого сайта
   {{< /roadmap-item >}}
 
@@ -151,3 +149,6 @@ Windows Defender + голова на плечах = достаточно.
   {{< /roadmap-item >}}
 
 {{< /roadmap >}}
+
+
+

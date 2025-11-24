@@ -1,0 +1,43 @@
+{{/* layouts/shortcodes/latest-posts.html */}}
+{{ $section := .Get "section" | default "docs" }}
+
+<div class="latest-posts-container">
+  <div class="latest-posts-header">
+    <div>
+      <h3 class="text-3xl font-bold" style="font-size: 1.6rem; font-weight: 800; color: var(--primary);">Последние обновления</h3>
+      <p class="text-gray-500 mt-1">Новые материалы в базе знаний</p>
+    </div>
+    <a href="/{{ $section }}/" class="view-all-link">Смотреть все →</a>
+  </div>
+
+  <div class="latest-posts-grid">
+    {{/* Логика: берем первые 3 страницы из указанного раздела, сортируем по дате */}}
+    {{ range first 3 (where site.RegularPages "Section" $section) }}
+      <a href="{{ .RelPermalink }}" class="glass-post-card group">
+        
+        <!-- Верх: Дата и время чтения -->
+        <div class="post-meta">
+          <span class="post-date">{{ .Date.Format "02.01.2006" }}</span>
+          <span class="post-dot"></span>
+          <span class="post-readtime">{{ .ReadingTime }} мин</span>
+        </div>
+
+        <!-- Заголовок -->
+        <h3 class="post-title group-hover:text-sky-500 transition-colors">
+          {{ .Title }}
+        </h3>
+
+        <!-- Описание (обрезаем если длинное) -->
+        <p class="post-summary">
+          {{ .Description | default .Summary | plainify | truncate 100 }}
+        </p>
+
+        <!-- Кнопка "Читать" (появляется при наведении) -->
+        <div class="post-read-more">
+          Читать статью 
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+        </div>
+      </a>
+    {{ end }}
+  </div>
+</div>

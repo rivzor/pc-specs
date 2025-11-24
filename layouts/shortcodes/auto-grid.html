@@ -1,0 +1,40 @@
+{{/* layouts/shortcodes/auto-grid.html */}}
+<div class="auto-grid-container">
+  
+  {{/* Берем все страницы в текущей секции, кроме самой себя (индекса) */}}
+  {{ $pages := .Page.Pages.ByWeight }}
+  
+  {{ if eq (len $pages) 0 }}
+    <p class="text-gray-500 italic">В этом разделе пока нет статей.</p>
+  {{ else }}
+    <div class="auto-grid">
+      {{ range $pages }}
+        <a href="{{ .RelPermalink }}" class="glass-section-card group">
+          
+          <div class="card-content">
+            <!-- Заголовок статьи -->
+            <h3 class="card-title group-hover:text-sky-500 transition-colors">
+              {{ .Title }}
+              {{ if .Params.draft }}<span class="text-red-400 text-xs ml-2">[Draft]</span>{{ end }}
+            </h3>
+
+            <!-- Описание (из description или summary) -->
+            <p class="card-desc">
+              {{ .Description | default .Summary | plainify | truncate 120 }}
+            </p>
+          </div>
+
+          <!-- Нижняя часть с датой и стрелкой -->
+          <div class="card-footer">
+            <span class="card-date">{{ .Date.Format "02.01.2006" }}</span>
+            <span class="card-arrow">
+              Читать
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+            </span>
+          </div>
+
+        </a>
+      {{ end }}
+    </div>
+  {{ end }}
+</div>

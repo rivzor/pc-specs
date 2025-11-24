@@ -7,8 +7,13 @@
       "previewPath": null,
       "fields": [
         {
-          "title": "description",
-          "name": "description",
+          "title": "title",
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "title": "linkTitle",
+          "name": "linkTitle",
           "type": "string"
         },
         {
@@ -17,36 +22,34 @@
           "type": "number"
         },
         {
+          "title": "icon",
+          "name": "icon",
+          "type": "string"
+        },
+        {
+          "title": "collapsible",
+          "name": "collapsible",
+          "type": "boolean"
+        },
+        {
+          "title": "prev",
+          "name": "prev",
+          "type": "string"
+        },
+        {
           "title": "comments",
           "name": "comments",
           "type": "boolean"
         },
         {
-          "title": "toc",
-          "name": "toc",
-          "type": "boolean"
+          "title": "date",
+          "name": "date",
+          "type": "datetime"
         },
         {
-          "title": "cascade",
-          "name": "cascade",
-          "type": "fields",
-          "fields": [
-            {
-              "title": "type",
-              "name": "type",
-              "type": "string"
-            }
-          ]
-        },
-        {
-          "title": "breadcrumbs",
-          "name": "breadcrumbs",
-          "type": "boolean"
-        },
-        {
-          "title": "tags",
-          "name": "tags",
-          "type": "tags"
+          "title": "lastmod",
+          "name": "lastmod",
+          "type": "datetime"
         }
       ]
     }
@@ -63,6 +66,53 @@
     {
       "title": "pc-specs",
       "path": "[[workspace]]"
+    }
+  ],
+  "frontMatter.taxonomy.fieldGroups": [
+    {
+      "id": "authors_group",
+      "fields": [
+        {
+          "title": "name",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "title": "image",
+          "name": "image",
+          "type": "image"
+        }
+      ]
+    },
+    {
+      "id": "authors_group",
+      "fields": [
+        {
+          "title": "name",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "title": "image",
+          "name": "image",
+          "type": "image"
+        }
+      ]
+    },
+    {
+      "id": "authors_group",
+      "fields": [
+        {
+          "title": "name",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "title": "image",
+          "name": "image",
+          "type": "image"
+        }
+      ]
     }
   ]
 }

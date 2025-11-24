@@ -1,0 +1,56 @@
+/* =========================================
+   SMALL COMPONENTS (Tips, Keys, Donate)
+   ========================================= */
+
+/* --- TOOLTIPS --- */
+.my-tooltip { position: relative; cursor: help; border-bottom: 1px dashed #888; transition: border-color 0.2s; }
+.my-tooltip:hover { border-bottom-color: #0ea5e9; color: #0ea5e9; }
+.my-tooltip::after {
+  content: attr(data-tip); position: absolute; bottom: 100%; left: 50%;
+  transform: translateX(-50%) translateY(10px) scale(0.95); margin-bottom: 10px;
+  width: max-content; max-width: 250px; padding: 8px 12px;
+  font-size: 0.85rem; line-height: 1.4; font-weight: normal; border-radius: 8px; text-align: center; pointer-events: none;
+  opacity: 0; visibility: hidden; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); z-index: 9999;
+  background-color: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0,0,0,0.1); color: #333; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.2);
+}
+:is(html.dark) .my-tooltip::after {
+  background-color: rgba(30, 30, 30, 0.9); border-color: rgba(255,255,255,0.1); color: #eee; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+}
+.my-tooltip::before {
+  content: ''; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(10px);
+  border: 6px solid transparent; border-top-color: rgba(255, 255, 255, 0.9); margin-bottom: -2px;
+  opacity: 0; visibility: hidden; transition: all 0.2s; z-index: 99;
+}
+:is(html.dark) .my-tooltip::before { border-top-color: rgba(30, 30, 30, 0.9); }
+.my-tooltip:hover::after, .my-tooltip:hover::before { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0) scale(1); }
+
+/* --- KEYBOARD KEYS --- */
+.keyboard-sequence { display: inline-flex; align-items: center; gap: 4px; vertical-align: middle; font-family: ui-monospace, monospace; }
+kbd {
+  display: inline-block; padding: 0.2em 0.5em; font-size: 0.85em; font-weight: 600; line-height: 1;
+  color: #24292e; vertical-align: middle; white-space: nowrap;
+  background-color: #f6f8fa; border: 1px solid #d1d5da; border-bottom-color: #c6cbd1; border-radius: 6px;
+  box-shadow: inset 0 -3px 0 rgba(170, 170, 170, 0.2);
+}
+.key-separator { color: #888; font-weight: 400; margin: 0 2px; }
+:is(html.dark) kbd {
+  background-color: #222; color: #e5e7eb; border: 1px solid #444; border-bottom-color: #111;
+  box-shadow: inset 0 -3px 0 rgba(0,0,0,0.6), 0 0 10px rgba(0,0,0,0.2); text-shadow: 0 0 1px rgba(255,255,255,0.3);
+}
+:is(html.dark) .key-separator { color: #666; }
+kbd:hover { transform: translateY(1px); box-shadow: inset 0 -1px 0 rgba(0,0,0,0.5); }
+
+/* --- GHOST DONATE --- */
+.donate-ghost-wrapper { display: flex; justify-content: center; margin: 3rem 0 1rem 0; width: 100%; }
+.donate-ghost-link {
+  display: inline-flex; align-items: center; gap: 8px; background: transparent; text-decoration: none !important;
+  color: #9ca3af; font-size: 0.8rem; font-weight: 500; font-family: monospace; opacity: 0.4;
+  transition: all 0.3s ease; cursor: pointer; border-bottom: 1px dotted transparent;
+}
+.donate-ghost-icon { width: 14px; height: 14px; filter: grayscale(100%); transition: all 0.3s ease; }
+.donate-ghost-link:hover { opacity: 1; color: #666; transform: translateY(-1px); }
+.donate-ghost-link:hover .donate-ghost-icon { color: #ef4444; filter: grayscale(0%); animation: ghost-beat 1s infinite; }
+:is(html.dark) .donate-ghost-link { color: #6b7280; }
+:is(html.dark) .donate-ghost-link:hover { color: #d1d5db; }
+@keyframes ghost-beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
