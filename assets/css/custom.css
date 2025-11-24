@@ -3,11 +3,11 @@
    Imports all modules.
    ========================================= */
 
-@import "./modules/global.css";
-@import "./modules/header.css";
-@import "./modules/footer.css";
-@import "./modules/components.css";
-@import "./modules/sections.css";
+@import "modules/global.css";
+@import "modules/header.css";
+@import "modules/footer.css";
+@import "modules/components.css";
+@import "modules/sections.css";
 
 /* 2. Принудительно включаем клики на кнопках (Табы) */
 button, .hextra-tabs-toggle {
